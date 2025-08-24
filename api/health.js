@@ -6,4 +6,3 @@ module.exports = (req, res) => {
         platform: 'Vercel'
     });
 };
-}
