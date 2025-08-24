@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Security Auditor - Ultimate Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'security-critical': '#dc2626',
+                        'security-high': '#ea580c',
+                        'security-medium': '#d97706',
+                        'security-low': '#65a30d',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .demo-section { display: none; }
+        .demo-section.active { display: block; }
+        .vulnerability-critical { border-left: 4px solid #dc2626; }
+        .vulnerability-high { border-left: 4px solid #ea580c; }
+        .vulnerability-medium { border-left: 4px solid #d97706; }
+        .vulnerability-low { border-left: 4px solid #65a30d; }
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid orange;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange; }
+        }
+        .card-hover { transition: transform 0.2s; }
+        .card-hover:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen">
