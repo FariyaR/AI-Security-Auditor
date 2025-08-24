@@ -8,10 +8,10 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Railway deployment fix
-if (process.env.RAILWAY_ENVIRONMENT) {
-    console.log('🚂 Running on Railway');
-}
+console.log('Starting AI Security Auditor...');
+console.log('Port:', port);
+console.log('Node version:', process.version);
+console.log('Environment:', process.env.NODE_ENV || 'development');
 
 app.use(cors());
 app.use(express.json());
@@ -23,7 +23,13 @@ app.get('/', (req, res) => {
 });
 
 const upload = multer({ storage: multer.memoryStorage() });
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+let openai;
+try {
+    openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    console.log('OpenAI client initialized');
+} catch (error) {
+    console.error('OpenAI initialization failed:', error.message);
+}
 
 let scanHistory = [];
 
@@ -119,6 +125,9 @@ ${numberedCode}`;
 
     try {
         console.log(`Attempting GPT-5 analysis for ${filename}...`);
+        if (!openai) {
+            throw new Error('OpenAI client not initialized');
+        }
         const response = await openai.chat.completions.create({
             model: "gpt-5",
             messages: [
@@ -393,7 +402,18 @@ app.get('/api/dashboard/stats', (req, res) => {
     });
 });
 
-app.listen(port, '0.0.0.0', () => {
-    console.log(`🚀 AI Security Auditor server running on port ${port}`);
-    console.log(`📄 Railway deployment ready`);
+const server = app.listen(port, '0.0.0.0', () => {
+    console.log(`🚀 Server running on port ${port}`);
+});
+
+server.on('error', (error) => {
+    console.error('Server error:', error);
+});
+
+process.on('uncaughtException', (error) => {
+    console.error('Uncaught exception:', error);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled rejection at:', promise, 'reason:', reason);
 });
