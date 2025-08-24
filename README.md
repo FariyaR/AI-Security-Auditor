@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AI Security Auditor - Node.js Edition
 
 🚀 **EXACT REPLICA** of ULTIMATE_DEMO.html with Node.js backend - same look, same functionality, powered by Express.js and OpenAI GPT-5.
@@ -157,3 +158,7 @@ For issues or questions:
 ---
 
 **Built with ❤️ using Node.js, Express.js, and OpenAI GPT-5**
+=======
+# AI-Security-Auditor
+GPT-5 Powered Security Platform  Transforming Code Security with Artificial Intelligence for the Modern Enterprise
+>>>>>>> 5c020d933c8c226616115194aa6895d8319cc9b5

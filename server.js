@@ -8,6 +8,11 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Railway deployment fix
+if (process.env.RAILWAY_ENVIRONMENT) {
+    console.log('🚂 Running on Railway');
+}
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static('.'));
