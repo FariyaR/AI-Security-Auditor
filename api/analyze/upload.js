@@ -19,15 +19,38 @@ module.exports = async (req, res) => {
             code = 'No code provided for analysis';
         }
 
-        const prompt = `Analyze this code for security vulnerabilities. Return JSON:
+        const prompt = `You are a comprehensive security analysis expert. Analyze this code for ALL possible security vulnerabilities including:
+
+1. SQL Injection
+2. Cross-Site Scripting (XSS)
+3. Command Injection
+4. Path Traversal
+5. Insecure Cryptography
+6. Hardcoded Secrets
+7. Authentication Bypass
+8. Authorization Issues
+9. Input Validation
+10. Buffer Overflows
+11. Race Conditions
+12. Insecure Deserialization
+13. XML External Entity (XXE)
+14. Server-Side Request Forgery (SSRF)
+15. Insecure Direct Object References
+16. Security Misconfiguration
+17. Sensitive Data Exposure
+18. Insufficient Logging
+19. Broken Access Control
+20. Using Components with Known Vulnerabilities
+
+Be thorough and find EVERY vulnerability, no matter how small. Return JSON:
 {
   "vulnerabilities": [
     {
-      "title": "Vulnerability name",
+      "title": "Specific vulnerability name",
       "severity": "Critical|High|Medium|Low",
       "line": line_number,
-      "description": "Description",
-      "fix": "How to fix"
+      "description": "Detailed description of the security issue",
+      "fix": "Specific remediation steps"
     }
   ],
   "summary": {
@@ -40,7 +63,7 @@ module.exports = async (req, res) => {
   }
 }
 
-Code:
+Code to analyze:
 ${code}`;
 
         const completion = await openai.chat.completions.create({
