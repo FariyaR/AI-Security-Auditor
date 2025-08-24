@@ -625,19 +625,27 @@ def login():
             placeholder.innerHTML = '<div class="text-center text-purple-400">🤖 GPT-5 Enterprise Analysis...</div>';
             
             try {
-                const formData = new FormData();
+                let code = '';
+                let filename = 'enterprise.java';
                 
                 if (fileInput.files[0]) {
-                    formData.append('files', fileInput.files[0]);
+                    const file = fileInput.files[0];
+                    filename = file.name;
+                    code = await new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => resolve(e.target.result);
+                        reader.readAsText(file);
+                    });
                 } else {
-                    const code = textarea.value;
-                    const blob = new Blob([code], { type: 'text/plain' });
-                    formData.append('files', blob, 'enterprise.java');
+                    code = textarea.value;
                 }
                 
                 const response = await fetch('/api/analyze/upload', {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ code: code, filename: filename })
                 });
                 
                 const result = await response.json();
