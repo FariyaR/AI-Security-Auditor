@@ -587,7 +587,7 @@ def login():
         
         // Check API status on load
         function checkAPIStatus() {
-            fetch('/health')
+            fetch('/api/health')
                 .then(response => {
                     if (response.ok) {
                         console.log('✅ Backend API is running - Real analysis available');
