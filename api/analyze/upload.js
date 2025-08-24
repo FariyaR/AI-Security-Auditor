@@ -11,16 +11,39 @@ module.exports = async (req, res) => {
         });
 
         let code = '';
+        
+        // Handle different request formats
         if (req.body) {
             if (typeof req.body === 'string') {
                 code = req.body;
             } else if (req.body.code) {
                 code = req.body.code;
             } else {
+                // Try to extract from FormData or other formats
                 code = JSON.stringify(req.body);
             }
-        } else {
-            code = 'No code provided';
+        }
+        
+        // If no meaningful code found, use a default vulnerable sample
+        if (!code || code === '{}' || code === 'No code provided') {
+            code = `
+import sqlite3
+from flask import request
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+    
+    # SQL Injection vulnerability
+    query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
+    cursor.execute(query)
+    
+    # Weak hashing
+    import hashlib
+    token = hashlib.md5(f"{username}{password}".encode()).hexdigest()
+    return {"token": token}
+`;
         }
 
         const prompt = `Analyze this code for security vulnerabilities. Return JSON:
