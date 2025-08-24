@@ -1,1 +1,14 @@
-{\n  \"name\": \"ai-security-auditor\",\n  \"version\": \"1.0.0\",\n  \"description\": \"GPT-5 Powered Security Analysis Platform\",\n  \"main\": \"server.js\",\n  \"scripts\": {\n    \"start\": \"node server.js\",\n    \"dev\": \"nodemon server.js\"\n  },\n  \"dependencies\": {\n    \"openai\": \"^4.20.1\",\n    \"axios\": \"^1.6.0\"\n  }\n}\n
+{
+  "name": "ai-security-auditor",
+  "version": "1.0.0",
+  "description": "GPT-5 Powered Security Analysis Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "openai": "^4.20.1",
+    "axios": "^1.6.0"
+  }
+}
