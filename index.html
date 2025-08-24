@@ -437,17 +437,11 @@ def login():
                 updateRepoResults(result, 'individual');
             } catch (error) {
                 console.error('Repo analysis error:', error);
-                // Show demo data with realistic values
-                setTimeout(() => {
-                    loadingDiv.remove();
-                    updateRepoResults({
-                        summary: {
-                            total_files: 47,
-                            total_vulnerabilities: 12,
-                            risk_score: 78
-                        }
-                    }, 'individual');
-                }, 2000);
+                loadingDiv.remove();
+                // Show error instead of demo data
+                const errorDiv = document.createElement('div');
+                errorDiv.innerHTML = `<div class="text-red-400 text-center py-4">❌ Repository analysis failed: ${error.message}</div>`;
+                results.parentNode.insertBefore(errorDiv, results);
             }
         }
         
@@ -713,15 +707,11 @@ def login():
                 results.classList.remove('hidden');
                 
             } catch (error) {
-                setTimeout(() => {
-                    loadingDiv.remove();
-                    const metrics = results.querySelectorAll('.text-2xl');
-                    if (metrics[0]) metrics[0].textContent = '247';
-                    if (metrics[1]) metrics[1].textContent = '23';
-                    if (metrics[2]) metrics[2].textContent = '89';
-                    if (metrics[3]) metrics[3].textContent = '42%';
-                    results.classList.remove('hidden');
-                }, 2000);
+                console.error('Enterprise repo analysis error:', error);
+                loadingDiv.remove();
+                const errorDiv = document.createElement('div');
+                errorDiv.innerHTML = `<div class="text-red-400 text-center py-4">❌ Enterprise repository analysis failed: ${error.message}</div>`;
+                results.parentNode.insertBefore(errorDiv, results);
             }
         }
         
