@@ -53,7 +53,22 @@ ${code}`;
             temperature: 0.1
         });
 
-        const result = JSON.parse(completion.choices[0].message.content);
+        let responseContent = completion.choices[0].message.content;
+        
+        // Extract JSON from markdown code blocks if present
+        if (responseContent.includes('```json')) {
+            const jsonMatch = responseContent.match(/```json\s*([\s\S]*?)\s*```/);
+            if (jsonMatch) {
+                responseContent = jsonMatch[1];
+            }
+        } else if (responseContent.includes('```')) {
+            const codeMatch = responseContent.match(/```[\s\S]*?([\s\S]*?)\s*```/);
+            if (codeMatch) {
+                responseContent = codeMatch[1];
+            }
+        }
+        
+        const result = JSON.parse(responseContent.trim());
         res.json(result);
 
     } catch (error) {
