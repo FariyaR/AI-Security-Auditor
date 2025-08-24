@@ -218,7 +218,7 @@ def login():
                                 <!-- Security Score -->
                                 <div class="mb-6">
                                     <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm font-medium">Security Score</span>
+                                        <span class="text-sm font-medium">Risk Score</span>
                                         <span id="score-display" class="text-2xl font-bold text-red-400">15/100</span>
                                     </div>
                                     <div class="w-full bg-slate-700 rounded-full h-3">
@@ -377,17 +377,9 @@ def login():
                 if (scoreEl) scoreEl.textContent = `${securityScore}/100`;
                 if (barEl) barEl.style.width = `${securityScore}%`;
                 
-                // Update colors based on score
-                if (securityScore < 30) {
-                    document.getElementById('score-bar').className = 'bg-red-500 h-3 rounded-full transition-all duration-2000';
-                    document.getElementById('score-display').className = 'text-2xl font-bold text-red-400';
-                } else if (securityScore < 70) {
-                    document.getElementById('score-bar').className = 'bg-orange-500 h-3 rounded-full transition-all duration-2000';
-                    document.getElementById('score-display').className = 'text-2xl font-bold text-orange-400';
-                } else {
-                    document.getElementById('score-bar').className = 'bg-green-500 h-3 rounded-full transition-all duration-2000';
-                    document.getElementById('score-display').className = 'text-2xl font-bold text-green-400';
-                }
+                // Always use red color for risk score
+                document.getElementById('score-bar').className = 'bg-red-500 h-3 rounded-full transition-all duration-2000';
+                document.getElementById('score-display').className = 'text-2xl font-bold text-red-400';
                 document.getElementById('vuln-count').textContent = `🤖 GPT-5 Found ${vulnCount} Vulnerabilities in ${filename}`;
                 
                 const vulnList = document.getElementById('vuln-list');
