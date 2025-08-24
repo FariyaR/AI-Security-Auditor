@@ -356,7 +356,11 @@ app.post('/api/analyze/repo', async (req, res) => {
 });
 
 app.get('/health', (req, res) => {
-    res.json({ status: 'healthy' });
+    res.status(200).json({ 
+        status: 'healthy',
+        timestamp: new Date().toISOString(),
+        service: 'AI Security Auditor'
+    });
 });
 
 app.get('/api/scans', (req, res) => {
@@ -389,7 +393,7 @@ app.get('/api/dashboard/stats', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`🚀 AI Security Auditor server running on http://localhost:${port}`);
-    console.log(`📄 Open ULTIMATE_DEMO.html in your browser to use the interface`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`🚀 AI Security Auditor server running on port ${port}`);
+    console.log(`📄 Railway deployment ready`);
 });
