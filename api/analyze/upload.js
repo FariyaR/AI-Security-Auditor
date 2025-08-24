@@ -10,7 +10,18 @@ module.exports = async (req, res) => {
             apiKey: process.env.OPENAI_API_KEY
         });
 
-        let code = req.body.code || 'No code provided';
+        let code = '';
+        if (req.body) {
+            if (typeof req.body === 'string') {
+                code = req.body;
+            } else if (req.body.code) {
+                code = req.body.code;
+            } else {
+                code = JSON.stringify(req.body);
+            }
+        } else {
+            code = 'No code provided';
+        }
 
         const prompt = `Analyze this code for security vulnerabilities. Return JSON:
 {
