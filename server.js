@@ -402,12 +402,20 @@ app.get('/api/dashboard/stats', (req, res) => {
     });
 });
 
-const server = app.listen(port, '0.0.0.0', () => {
+const server = app.listen(port, () => {
     console.log(`🚀 Server running on port ${port}`);
+    console.log('Health endpoint: /health');
 });
 
 server.on('error', (error) => {
     console.error('Server error:', error);
+});
+
+process.on('SIGTERM', () => {
+    console.log('SIGTERM received, shutting down gracefully');
+    server.close(() => {
+        console.log('Process terminated');
+    });
 });
 
 process.on('uncaughtException', (error) => {
